@@ -281,7 +281,8 @@ class Pdf
         }
         $this->getCommand()
             ->setOperation('fill_form')
-            ->setOperationArgument($data, true);
+            ->setInputXFDF($data)
+            ->setOperationArgument('-');
 
         if ($dropXfa) {
             $this->dropXfa();

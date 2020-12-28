@@ -37,6 +37,11 @@ class Command extends BaseCommand
     protected $_operation;
 
     /**
+     * @var string input xfdf file
+     */
+    protected $_inputXFDF;
+
+    /**
      * @var string|array operation arguments, e.g. a list of page ranges or a
      * filename or tmp file instance
      */
@@ -110,6 +115,17 @@ class Command extends BaseCommand
         $this->checkExecutionStatus();
         $this->_operationArgument = $value;
         $this->_escapeOperationArgument = $escape;
+        return $this;
+    }
+
+    /**
+     * @param string $value the operation argument
+     * @return Command the command instance for method chaining
+     */
+    public function setInputXFDF($value)
+    {
+        $this->checkExecutionStatus();
+        $this->_inputXFDF = $value;
         return $this;
     }
 
@@ -208,16 +224,23 @@ class Command extends BaseCommand
      */
     protected function processOptions($filename = null)
     {
-        // output must be first option after operation
-        if ($filename !== null) {
-            $this->addArg(' > ',$filename, false);
-        }
         foreach ($this->_options as $option) {
             if (is_array($option)) {
                 $this->addArg($option[0], $option[1], $option[2]);
             } else {
                 $this->addArg($option);
             }
+        }
+        if ($filename !== null) {
+            $this->addArg('output', '-', false);
+        }
+        // add input argument
+        if ($this->_inputXFDF) {
+            $this->addArg(' < ', $this->_inputXFDF, false);
+        }
+        // output must be last option
+        if ($filename !== null) {
+            $this->addArg(' > ', $filename, false);
         }
     }
 
