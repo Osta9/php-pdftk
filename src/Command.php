@@ -17,7 +17,7 @@ class Command extends BaseCommand
     /**
      * @var string the pdftk binary
      */
-    protected $_command = 'pdftk';
+    protected $_command = 'java -jar /mcpdf.jar';
 
     /**
      * @var array list of input files to process as array('name' => $filename,
@@ -188,7 +188,7 @@ class Command extends BaseCommand
     {
         $passwords = array();
         foreach ($this->_files as $handle => $file) {
-            $this->addArg($handle . '=', $file['name']);
+            $this->addArg(' ',$file['name']);
             if ($file['password'] !== null) {
                 $passwords[$handle] = $file['password'];
             }
@@ -210,7 +210,7 @@ class Command extends BaseCommand
     {
         // output must be first option after operation
         if ($filename !== null) {
-            $this->addArg('output', $filename, true);
+            $this->addArg(' > ',$filename, false);
         }
         foreach ($this->_options as $option) {
             if (is_array($option)) {
