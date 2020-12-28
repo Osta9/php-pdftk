@@ -17,7 +17,7 @@ class Command extends BaseCommand
     /**
      * @var string the pdftk binary
      */
-    protected $_command = 'mcpdf';
+    protected $_command = 'java -jar /bin/mcpdf.jar';
 
     /**
      * @var array list of input files to process as array('name' => $filename,
