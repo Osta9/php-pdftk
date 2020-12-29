@@ -204,7 +204,7 @@ class Command extends BaseCommand
     {
         $passwords = array();
         foreach ($this->_files as $handle => $file) {
-            $this->addArg(' ',$file['name']);
+            $this->addArg($file['name']);
             if ($file['password'] !== null) {
                 $passwords[$handle] = $file['password'];
             }
